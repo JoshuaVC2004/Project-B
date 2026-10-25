@@ -1,0 +1,23 @@
+Joshua Nazaire - Project B: System Calls
+
+WHAT I DID
+- printString: prints a null-terminated string using BIOS interrupt 0x10
+- readString: reads a line from the keyboard with interrupt 0x16, echoes
+  characters, handles Backspace, and ends the line with 0xa and 0x0
+- readSector: reads a disk sector into a buffer using interrupt 0x13
+- Created interrupt 0x21 (makeInterrupt21 and handleInterrupt21)
+- handleInterrupt21 provides: AX=0 print string, AX=1 read string,
+  AX=2 read sector, AX>=3 prints an error message
+
+HOW TO VERIFY
+1. Run ./compileOS.sh to build diskc.img (needs nasm, bcc, as86, ld86)
+2. Open Emumaker86 (simulator.jar), choose diskc.img for Hard Drive C,
+   enter 63 cylinders, 255 heads, 1000 sectors, and click Boot Disk C
+3. The program prints "Enter a line:". Type a line and press Enter.
+4. Your line is echoed back, then the contents of sector 30 print:
+   "If this message prints out, then your readSector function is
+   working correctly!"
+All of these go through interrupt 0x21.
+
+FILES
+kernel.c, kernel.asm, bootload.asm, compileOS.sh, message.txt, diskc.img
